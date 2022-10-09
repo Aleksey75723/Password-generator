@@ -12,8 +12,6 @@ namespace Password_generator
 {
     public partial class Form1 : Form
     {
-        int listPosition;//для выделения текста
-
         public Form1()
         {
             InitializeComponent();
@@ -33,17 +31,24 @@ namespace Password_generator
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
+            //выделяет цифры
             for (int i = 0; i < 10; i++)
             {
                 if (richTextBox1.Find(Convert.ToString(i)) > 0)
                 {
-                    listPosition = richTextBox1.Find(Convert.ToString(i));
-                    richTextBox1.SelectionStart = listPosition;
+                    richTextBox1.SelectionStart = richTextBox1.Find(Convert.ToString(i));
                     richTextBox1.SelectionLength = Convert.ToString(i).Length;
-                    //richTextBox1.SelectionColor = Color.Red;
                     richTextBox1.SelectionFont = new Font("Times New Roman", 22, FontStyle.Bold);
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //копирует в буфер обмена
+            richTextBox1.SelectionStart = 0;
+            richTextBox1.SelectionLength = richTextBox1.Text.Length;
+            Clipboard.SetText(richTextBox1.SelectedText);
         }
     }
 }
